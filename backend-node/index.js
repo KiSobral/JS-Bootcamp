@@ -1,5 +1,19 @@
-const http = require("http");
+const express = require("express");
 
-http.createServer((req, res) => {
-  return res.end("Meu primeiro projetinho em JS :D")
-}).listen(3000);
+const app = express();
+
+app.get('/', (req, res) => {
+  return res.send(`Bem vinde, ${req.query.name}! Esse eh meu primeiro projetinho em JS :D`);
+})
+
+app.get('/landing', (req, res) => {
+  return res.send('Meu primeiro router em JS');
+})
+
+app.get("/nome/:name", (req, res) => {
+  return res.json({
+    message: `Bem-vinde, ${req.params.name}`
+  })
+})
+
+app.listen(3000);
