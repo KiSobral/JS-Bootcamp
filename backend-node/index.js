@@ -2,8 +2,20 @@ const express = require("express");
 
 const app = express();
 
+const logMiddleware = (req, res, next) => {
+  console.log(
+    `HOST: ${req.headers.host} | URL: ${req.url} | METHOD: ${req.method}`
+  );
+
+  req.appName = 'Super Programa JS'
+
+  return next();
+}
+
+app.use(logMiddleware);
+
 app.get('/', (req, res) => {
-  return res.send(`Bem vinde, ${req.query.name}! Esse eh meu primeiro projetinho em JS :D`);
+  return res.send(`Bem vinde ao ${req.appName}, ${req.query.name}!`);
 })
 
 app.get('/landing', (req, res) => {
