@@ -12,7 +12,7 @@ app.get('/landing', (req, res) => {
 
 app.get("/nome/:name", (req, res) => {
   return res.json({
-    message: `Bem-vinde, ${req.params.name}`
+    welcome: `Bem-vinde, ${req.params.name}`
   })
 })
 
