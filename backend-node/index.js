@@ -1,31 +1,20 @@
-const express = require("express");
+const express  = require("express");
+const nunjucks = require("nunjucks");
 
 const app = express();
 
-const logMiddleware = (req, res, next) => {
-  console.log(
-    `HOST: ${req.headers.host} | URL: ${req.url} | METHOD: ${req.method}`
-  );
+nunjucks.configure("views", {
+  autoescape: true,
+  express: app,
+  watch: true,
+});
 
-  req.appName = 'Super Programa JS'
+app.set("view engine", "njk");
 
-  return next();
-}
-
-app.use(logMiddleware);
-
-app.get('/', (req, res) => {
-  return res.send(`Bem vinde ao ${req.appName}, ${req.query.name}!`);
-})
-
-app.get('/landing', (req, res) => {
-  return res.send('Meu primeiro router em JS');
-})
-
-app.get("/nome/:name", (req, res) => {
-  return res.json({
-    welcome: `Bem-vinde, ${req.params.name}`
-  })
+app.get('/:name', (req, res) => {
+  return res.render("list", {
+    name: req.params.name,
+  });
 })
 
 app.listen(3000);
