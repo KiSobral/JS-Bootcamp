@@ -1,30 +1,30 @@
-const express  = require("express");
-const nunjucks = require("nunjucks");
+const express = require('express')
+const nunjucks = require('nunjucks')
 
-const app = express();
+const app = express()
 
-nunjucks.configure("views", {
+nunjucks.configure('views', {
   autoescape: true,
   express: app,
-  watch: true,
-});
-
-app.use(express.urlencoded({ extended: false }));
-app.set("view engine", "njk");
-
-const users = ["Thais Rebouças", "Leonardo Gomes", "Hugo Sobral"];
-
-app.get("/", (req, res) => {
-  return res.render("list", { users });
+  watch: true
 })
 
-app.get("/new", (req, res) => {
-  return res.render("new");
-});
+app.use(express.urlencoded({ extended: false }))
+app.set('view engine', 'njk')
 
-app.post("/create", (req, res) => {
+const users = ['Thais Rebouças', 'Leonardo Gomes', 'Hugo Sobral']
+
+app.get('/', (req, res) => {
+  return res.render('list', { users })
+})
+
+app.get('/new', (req, res) => {
+  return res.render('new')
+})
+
+app.post('/create', (req, res) => {
   users.push(req.body.user)
-  return res.redirect("/")
-});
+  return res.redirect('/')
+})
 
-app.listen(3000);
+app.listen(3000)
