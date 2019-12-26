@@ -12,19 +12,29 @@ nunjucks.configure("views", {
 app.use(express.urlencoded({ extended: false }));
 app.set("view engine", "njk");
 
-const users = ["Thais Rebouças", "Leonardo Gomes", "Hugo Sobral"];
-
 app.get("/", (req, res) => {
-  return res.render("list", { users });
+  return res.render("formulario");
 })
 
-app.get("/new", (req, res) => {
-  return res.render("new");
+app.post("/check", (req, res) => {
+  
+  if (req.body.age < 18) {
+    return res.redirect(`/minor?age=${req.body.age}`);
+  } else {
+    return res.redirect(`/major?age=${req.body.age}`);
+  }
 });
 
-app.post("/create", (req, res) => {
-  users.push(req.body.user)
-  return res.redirect("/")
-});
+app.get("/major", (req, res) => {
+  const age = req.query;
+
+  return res.render('major', age);
+})
+
+app.get("/minor", (req, res) => {
+  const age = req.query;
+
+  return res.render('minor', age);
+})
 
 app.listen(3000);
